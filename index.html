@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kai Collect · Especialistas Pokémon TCG en Valencia</title>
+  <meta name="description" content="Kai Collect · Especialistas Pokémon TCG en Valencia. Buy · Sell · Trade worldwide. Producto sellado, cartas gradeadas y cartas sueltas." />
+  <meta name="theme-color" content="#0a0a0c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Serif+JP:wght@900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header" id="header">
+    <a href="#inicio" class="logo" aria-label="Kai Collect inicio">
+      <span class="logo__k">K</span><span class="logo__kanji">会</span><span class="logo__k">I</span>
+      <span class="logo__sub">COLLECT</span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#stock">Stock</a>
+      <a href="#vault">Gradeadas</a>
+      <a href="#compramos">Compramos</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#eventos">Eventos</a>
+      <a href="#tienda">Tienda</a>
+      <a href="#redes" class="nav__cta">Contacto</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio">
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__sun"></div>
+        <div class="hero__grid"></div>
+        <span class="hero__bigkanji">会</span>
+      </div>
+
+      <div class="hero__content">
+        <p class="eyebrow"><span class="dot"></span> Valencia · Spain · Worldwide</p>
+        <h1 class="hero__title">
+          <span class="line">ESPECIALISTAS</span>
+          <span class="line line--outline">POKÉMON</span>
+          <span class="line line--red">TCG<span class="hero__jp">ポケモンカード</span></span>
+        </h1>
+        <p class="hero__lead">Producto sellado, cartas gradeadas y joyas vintage. Consulta lo que tenemos <strong>ahora mismo en tienda</strong> y resérvalo por Instagram.</p>
+        <div class="hero__actions">
+          <a href="#stock" class="btn btn--red">Ver stock en tienda <span>→</span></a>
+          <a href="#vault" class="btn btn--ghost">Entrar al Vault</a>
+        </div>
+        <ul class="hero__stats">
+          <li><strong data-count="15700" data-suffix="+">0</strong><span>seguidores</span></li>
+          <li><strong data-count="28">0</strong><span>productos</span></li>
+          <li><strong>B·S·T</strong><span>worldwide</span></li>
+        </ul>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <img class="float-pack fp1" src="img/productos/30th-sobre.webp" alt="" />
+        <img class="float-pack fp2" src="img/productos/ah-sobre.webp" alt="" />
+        <img class="float-pack fp3" src="img/productos/151-sobre.webp" alt="" />
+        <div class="hero__slab" id="heroSlab"></div>
+      </div>
+
+      <a href="#stock" class="scroll-hint" aria-label="Bajar"><span></span></a>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>BUY</span><i>会</i><span>SELL</span><i>会</i><span>TRADE</span><i>会</i><span>WORLDWIDE</span><i>会</i><span>ESPECIALISTAS POKÉMON</span><i>会</i><span>VALENCIA</span><i>会</i>
+        <span>BUY</span><i>会</i><span>SELL</span><i>会</i><span>TRADE</span><i>会</i><span>WORLDWIDE</span><i>会</i><span>ESPECIALISTAS POKÉMON</span><i>会</i><span>VALENCIA</span><i>会</i>
+      </div>
+    </div>
+
+    <!-- ============ STOCK ============ -->
+    <section class="section stock" id="stock">
+      <div class="section__head reveal">
+        <p class="kicker"><span>01</span> Stock en tienda</p>
+        <h2 class="h2">Lo que hay <em>ahora</em> en la tienda</h2>
+        <p class="section__sub">No vendemos por la web: esto es el escaparate. ¿Te interesa algo? Pulsa en el producto y <strong>resérvalo por DM</strong>.</p>
+      </div>
+
+      <div class="toolbar reveal">
+        <div class="chips" id="chips" role="tablist" aria-label="Categorías"></div>
+        <div class="toolbar__right">
+          <div class="segmented" id="langs" role="group" aria-label="Idioma"></div>
+          <label class="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="search" type="search" placeholder="Buscar set o producto…" aria-label="Buscar" />
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="onlyStock" />
+            <span class="toggle__ui"></span> Solo disponible
+          </label>
+          <select id="sort" aria-label="Ordenar">
+            <option value="def">Destacados</option>
+            <option value="stock">Más stock</option>
+            <option value="az">A → Z</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="stock__meta"><span class="live"></span> Stock actualizado: <b id="updated"></b> · <span id="count"></span></p>
+
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="empty" hidden>No hay nada con ese filtro. Pregunta por DM, a lo mejor está en el almacén 👀</p>
+    </section>
+
+    <!-- ============ VAULT 3D ============ -->
+    <section class="section vault" id="vault">
+      <div class="vault__bg" aria-hidden="true"><span>VAULT</span></div>
+      <div class="section__head reveal">
+        <p class="kicker"><span>02</span> The Kai Vault</p>
+        <h2 class="h2">Gradeadas <em>top</em></h2>
+        <p class="section__sub">Las cartas más top del hobby. Arrastra para girar el slab en 3D y pulsa <b>Dar la vuelta</b> para ver la parte de atrás. ¿Tienes alguna? <b>Te la compramos.</b></p>
+      </div>
+
+      <div class="vault__stage reveal">
+        <div class="vault__viewer" id="viewer">
+          <div class="slab3d" id="slab3d">
+            <div class="slab3d__inner" id="slabInner"></div>
+          </div>
+          <div class="vault__floor" aria-hidden="true"></div>
+        </div>
+
+        <aside class="vault__info" id="vaultInfo"></aside>
+      </div>
+
+      <div class="vault__thumbs reveal" id="thumbs" role="tablist" aria-label="Elegir carta"></div>
+    </section>
+
+    <!-- ============ COMPRAMOS ============ -->
+    <section class="section buy" id="compramos">
+      <div class="buy__inner reveal">
+        <div class="buy__title">
+          <p class="kicker"><span>03</span> ¿Vendes tu colección?</p>
+          <h2 class="h2 h2--xl">Compramos<br /><span class="red">producto.</span></h2>
+        </div>
+        <div class="buy__cards">
+          <article class="buy-card">
+            <span class="buy-card__n">01</span>
+            <h3>Cartas gradeadas</h3>
+            <p>PSA, CGC, BGS… Vintage y moderno. Valoramos al momento.</p>
+          </article>
+          <article class="buy-card">
+            <span class="buy-card__n">02</span>
+            <h3>Producto sellado</h3>
+            <p>Booster boxes, ETBs, blisters y colecciones. Inglés, español y japonés.</p>
+          </article>
+          <article class="buy-card">
+            <span class="buy-card__n">03</span>
+            <h3>Cartas sueltas</h3>
+            <p>Alt arts, full arts, holos vintage y colecciones enteras.</p>
+          </article>
+        </div>
+        <a class="btn btn--red btn--lg" target="_blank" rel="noopener" data-link="dm">Mándanos fotos por DM <span>→</span></a>
+      </div>
+    </section>
+
+    <!-- ============ SOBRE MI ============ -->
+    <section class="section about" id="sobre-mi">
+      <div class="about__grid">
+        <div class="about__photo reveal">
+          <div class="about__frame">
+            <!-- Sustituye por una foto real: <img src="img/edu.jpg" alt="Edu, Kai Collect"> -->
+            <div class="about__placeholder">
+              <span class="about__kanji">会</span>
+              <small>Foto de Edu<br />img/edu.jpg</small>
+            </div>
+          </div>
+          <div class="about__badge">
+            <strong>EDU</strong>
+            <span>Founder · Kai Collect</span>
+          </div>
+        </div>
+
+        <div class="about__text reveal">
+          <p class="kicker"><span>04</span> Sobre mí</p>
+          <h2 class="h2">De coleccionista<br />a <em>Kai Collect</em></h2>
+          <p>Soy Edu, de Valencia. Abrí mi primer sobre de pequeño y nunca he parado. Kai Collect nace de eso: de las ganas de compartir esta afición con gente que la vive igual que yo.</p>
+          <p>Hoy nos dedicamos a comprar, vender e intercambiar Pokémon TCG por todo el mundo: producto sellado, cartas sueltas y gradeadas top. Nos verás en card shows de España y Europa, haciendo sorteos y abriendo sobres en directo.</p>
+          <p class="about__quote">“会 (kai) significa <b>reunión, encuentro</b>. Eso es esta tienda: un sitio donde se junta la comunidad.”</p>
+
+          <ul class="about__facts">
+            <li><span>📍</span> <a data-link="maps" target="_blank" rel="noopener">Tienda POKEKAI · Valencia ↗</a></li>
+            <li><span>🤝</span> Buy · Sell · Trade worldwide</li>
+            <li><span>📦</span> Envíos por Cardmarket</li>
+            <li><span>🎟️</span> Card shows en España y UK</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EVENTOS ============ -->
+    <section class="section events" id="eventos">
+      <div class="section__head reveal">
+        <p class="kicker"><span>05</span> On tour</p>
+        <h2 class="h2">Nos vemos en los <em>card shows</em></h2>
+      </div>
+      <ol class="events__list" id="events"></ol>
+    </section>
+
+    <!-- ============ TIENDA / MAPA ============ -->
+    <section class="section shop" id="tienda">
+      <div class="shop__grid">
+        <div class="shop__info reveal">
+          <p class="kicker"><span>06</span> Tienda física</p>
+          <h2 class="h2">Ven a <em>vernos</em></h2>
+          <p class="section__sub">Todo el stock que ves en la web está en la tienda. Pásate a verlo en persona, a vender tu colección o a hacer un trade.</p>
+          <div class="shop__card">
+            <span class="shop__pin">📍</span>
+            <div>
+              <strong>POKEKAI</strong>
+              <span>Kai Collect · Valencia, España</span>
+            </div>
+          </div>
+          <div class="shop__btns">
+            <a class="btn btn--red" target="_blank" rel="noopener" data-link="maps">Cómo llegar <span>→</span></a>
+            <a class="btn btn--ghost" target="_blank" rel="noopener" data-link="dm">Preguntar horario</a>
+          </div>
+        </div>
+        <a class="shop__map reveal" target="_blank" rel="noopener" data-link="maps" aria-label="Abrir POKEKAI en Google Maps">
+          <iframe id="mapFrame" title="Mapa de POKEKAI" loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+          <span class="shop__overlay">Abrir en Google Maps ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ REDES ============ -->
+    <section class="section socials" id="redes">
+      <div class="section__head reveal">
+        <p class="kicker"><span>07</span> Contacto</p>
+        <h2 class="h2">Síguenos y <em>escríbenos</em></h2>
+      </div>
+
+      <div class="socials__grid">
+        <a class="social social--ig reveal" target="_blank" rel="noopener" data-link="instagram">
+          <div class="social__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </div>
+          <div>
+            <h3>Instagram</h3>
+            <p>@kaicollect.tcg</p>
+            <span class="social__meta"><b data-count="15700" data-suffix="+">0</b> seguidores · sorteos · aperturas</span>
+          </div>
+          <span class="social__arrow">↗</span>
+        </a>
+
+        <a class="social social--tt reveal" target="_blank" rel="noopener" data-link="tiktok">
+          <div class="social__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.4 2.6 2.2 4.4 5 4.6"/></svg>
+          </div>
+          <div>
+            <h3>TikTok</h3>
+            <p>@kaicollect.tcg</p>
+            <span class="social__meta">Aperturas, pulls y card shows</span>
+          </div>
+          <span class="social__arrow">↗</span>
+        </a>
+
+        <a class="social social--yt reveal" target="_blank" rel="noopener" data-link="youtube">
+          <div class="social__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg>
+          </div>
+          <div>
+            <h3>YouTube</h3>
+            <p>@kaicollect</p>
+            <span class="social__meta">Shorts de aperturas y gradeadas</span>
+          </div>
+          <span class="social__arrow">↗</span>
+        </a>
+
+        <a class="social social--cm reveal" target="_blank" rel="noopener" data-link="cardmarket">
+          <div class="social__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16l-1.5 11a2 2 0 0 1-2 1.7H7.5a2 2 0 0 1-2-1.7z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+          </div>
+          <div>
+            <h3>Cardmarket</h3>
+            <p>KaiCollect</p>
+            <span class="social__meta">Compra online · envíos a toda Europa</span>
+          </div>
+          <span class="social__arrow">↗</span>
+        </a>
+
+        <a class="social social--dm reveal" target="_blank" rel="noopener" data-link="dm">
+          <div class="social__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg>
+          </div>
+          <div>
+            <h3>Mensaje directo</h3>
+            <p>Reservas y compras</p>
+            <span class="social__meta">Te respondemos por Instagram</span>
+          </div>
+          <span class="social__arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section faq" id="faq">
+      <div class="section__head reveal">
+        <p class="kicker"><span>08</span> Preguntas</p>
+        <h2 class="h2">FAQ</h2>
+      </div>
+      <div class="faq__list" id="faqList"></div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__big" aria-hidden="true">K<span>会</span>I COLLECT</div>
+    <div class="footer__row">
+      <p>© <span id="year"></span> Kai Collect · Valencia, España</p>
+      <p class="footer__links">
+        <a target="_blank" rel="noopener" data-link="instagram">Instagram</a>
+        <a target="_blank" rel="noopener" data-link="tiktok">TikTok</a>
+        <a target="_blank" rel="noopener" data-link="youtube">YouTube</a>
+        <a target="_blank" rel="noopener" data-link="cardmarket">Cardmarket</a>
+        <a target="_blank" rel="noopener" data-link="maps">Cómo llegar</a>
+        <a href="#inicio">Volver arriba ↑</a>
+      </p>
+    </div>
+    <p class="footer__legal">Pokémon y sus marcas pertenecen a Nintendo, Creatures Inc. y GAME FREAK inc. Kai Collect es una tienda independiente sin afiliación oficial.</p>
+  </footer>
+
+  <!-- ============ MODAL PRODUCTO ============ -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close aria-label="Cerrar">✕</button>
+      <div class="modal__art" id="modalArt"></div>
+      <div class="modal__body">
+        <p class="modal__set" id="modalSet"></p>
+        <h3 id="modalTitle"></h3>
+        <p class="modal__label">Elige idioma</p>
+        <div class="segmented segmented--modal" id="modalLangs" role="group" aria-label="Idioma"></div>
+        <div class="modal__tags" id="modalTags"></div>
+        <p class="modal__text">Este producto está <b>en tienda</b>. No se vende por la web: escríbenos por Instagram y te lo reservamos.</p>
+        <div class="modal__msg">
+          <code id="modalMsg"></code>
+          <button class="btn btn--small" id="copyMsg">Copiar mensaje</button>
+        </div>
+        <a class="btn btn--red" id="modalDM" target="_blank" rel="noopener">Reservar por Instagram →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
