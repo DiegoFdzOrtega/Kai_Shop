@@ -27,6 +27,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -271,6 +272,9 @@ select { background: var(--bg-2); border: 1px solid var(--line); border-radius: 
 .stock-bar { height: 3px; background: rgba(255,255,255,.06); border-radius: 3px; margin-top: 12px; overflow: hidden; }
 .stock-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--red-2)); border-radius: 3px; transform-origin: left; animation: grow 1s var(--ease) both .2s; }
 @keyframes grow { from { transform: scaleX(0); } }
+.more { display: flex; justify-content: center; margin-top: 34px; }
+.more .btn b { font-family: var(--f-mono); font-size: 12px; font-weight: 500; color: var(--muted); }
+.more .btn:hover span { transform: translateY(3px); }
 .empty { text-align: center; color: var(--muted); padding: 60px 0; }
 
 /* Idiomas */

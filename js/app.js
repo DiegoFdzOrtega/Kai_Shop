@@ -153,7 +153,12 @@
   }
 
   const matchCat = (p, cat) => cat === "all" || p.tipo === cat || (cat === "jp" && "JP" in p.stock) || (cat === "kr" && "KR" in p.stock) || (cat === "30th" && p.set === "30th Celebration") || (cat === "ah" && p.set === "Ascended Heroes") || (cat === "151" && p.set.startsWith("151"));
-  const state = { cat: "all", lang: "all", q: "", only: false, sort: "def" };
+  // Cuántos productos cargar cada vez: filas completas según las columnas visibles
+  const perPage = () => {
+    const cols = getComputedStyle($("#grid")).gridTemplateColumns.split(" ").filter(Boolean).length || 4;
+    return cols * (cols <= 2 ? 3 : 2);
+  };
+  const state = { cat: "all", lang: "all", q: "", only: false, sort: "def", limit: perPage(), list: [] };
   const maxStock = Math.max(...PRODUCTOS.map((p) => qty(p)), 1);
 
   const langEl = $("#langs");
@@ -161,7 +166,7 @@
   langEl.addEventListener("click", (e) => {
     const b = e.target.closest(".seg"); if (!b) return;
     $$(".seg", langEl).forEach((x) => { x.classList.toggle("is-active", x === b); x.setAttribute("aria-pressed", x === b); });
-    state.lang = b.dataset.lang; render();
+    state.lang = b.dataset.lang; state.limit = perPage(); render();
   });
 
   // chips
@@ -174,24 +179,13 @@
   chipsEl.addEventListener("click", (e) => {
     const b = e.target.closest(".chip"); if (!b) return;
     $$(".chip", chipsEl).forEach((c) => c.classList.toggle("is-active", c === b));
-    state.cat = b.dataset.cat; render();
+    state.cat = b.dataset.cat; state.limit = perPage(); render();
   });
-  $("#search").addEventListener("input", (e) => { state.q = e.target.value.trim().toLowerCase(); render(); });
-  $("#onlyStock").addEventListener("change", (e) => { state.only = e.target.checked; render(); });
-  $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
+  $("#search").addEventListener("input", (e) => { state.q = e.target.value.trim().toLowerCase(); state.limit = perPage(); render(); });
+  $("#onlyStock").addEventListener("change", (e) => { state.only = e.target.checked; state.limit = perPage(); render(); });
+  $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; state.limit = perPage(); render(); });
 
-  function render() {
-    let list = PRODUCTOS.filter((p) =>
-      matchCat(p, state.cat) &&
-      (state.lang === "all" || state.lang in p.stock) &&
-      (!state.only || qty(p, state.lang) > 0) &&
-      (!state.q || (p.nombre + " " + p.set + " " + langs(p).join(" ")).toLowerCase().includes(state.q))
-    );
-    if (state.sort === "stock") list = [...list].sort((a, b) => qty(b, state.lang) - qty(a, state.lang));
-    if (state.sort === "az") list = [...list].sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
-    if (state.sort === "def") list = [...list].sort((a, b) => (qty(b, state.lang) > 0) - (qty(a, state.lang) > 0));
-
-    $("#grid").innerHTML = list.map((p, i) => {
+  function cardHTML(p, i) {
       const n = qty(p, state.lang);
       const pills = langs(p).map((l) => `<span class="lp${p.stock[l] <= 0 ? " is-zero" : ""}${state.lang === l ? " is-sel" : ""}">${FLAG[l]} ${l} <b>${p.stock[l]}</b></span>`).join("");
       return `
@@ -205,7 +199,35 @@
           <div class="langpills">${pills}</div>
           <div class="stock-bar"><i style="width:${Math.max(4, (n / maxStock) * 100)}%"></i></div>
         </div>
-      </button>`; }).join("");
+      </button>`; }
+
+  function updateMore() {
+    const rest = state.list.length - state.limit;
+    const btn = $("#verMas");
+    btn.hidden = rest <= 0;
+    btn.querySelector("b").textContent = rest > 0 ? `quedan ${rest}` : "";
+  }
+  $("#verMas").addEventListener("click", () => {
+    const from = state.limit;
+    state.limit += perPage();
+    $("#grid").insertAdjacentHTML("beforeend", state.list.slice(from, state.limit).map((p, i) => cardHTML(p, i)).join(""));
+    updateMore();
+  });
+
+  function render() {
+    let list = PRODUCTOS.filter((p) =>
+      matchCat(p, state.cat) &&
+      (state.lang === "all" || state.lang in p.stock) &&
+      (!state.only || qty(p, state.lang) > 0) &&
+      (!state.q || (p.nombre + " " + p.set + " " + langs(p).join(" ")).toLowerCase().includes(state.q))
+    );
+    if (state.sort === "stock") list = [...list].sort((a, b) => qty(b, state.lang) - qty(a, state.lang));
+    if (state.sort === "az") list = [...list].sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+    if (state.sort === "def") list = [...list].sort((a, b) => (qty(b, state.lang) > 0) - (qty(a, state.lang) > 0));
+
+    state.list = list;
+    $("#grid").innerHTML = list.slice(0, state.limit).map((p, i) => cardHTML(p, i)).join("");
+    updateMore();
 
     const disp = list.filter((p) => qty(p, state.lang) > 0).length;
     $("#count").textContent = `${list.length} productos · ${disp} disponibles`;
