@@ -46,11 +46,13 @@
   const burger = $("#burger"), nav = $("#nav");
   burger.addEventListener("click", () => {
     const open = nav.classList.toggle("is-open");
+    document.body.classList.toggle("menu-open", open);
     burger.setAttribute("aria-expanded", open);
     document.body.style.overflow = open ? "hidden" : "";
   });
   $$("#nav a").forEach((a) => a.addEventListener("click", () => {
     nav.classList.remove("is-open");
+    document.body.classList.remove("menu-open");
     burger.setAttribute("aria-expanded", false);
     document.body.style.overflow = "";
   }));

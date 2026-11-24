@@ -90,6 +90,7 @@ button, input, select { font: inherit; color: inherit; }
 .nav a:hover { color: var(--text); background: rgba(255,255,255,.06); }
 .nav a.nav__cta { background: var(--red); color: #fff; margin-left: 8px; }
 .nav a.nav__cta:hover { background: var(--red-2); }
+.menu-open .header { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: transparent !important; border-color: transparent !important; }
 .burger { display: none; background: none; border: 0; width: 40px; height: 40px; cursor: pointer; position: relative; }
 .burger span { position: absolute; left: 9px; right: 9px; height: 2px; background: var(--text); transition: transform .3s, top .3s; }
 .burger span:first-child { top: 15px; }
@@ -634,8 +635,14 @@ select { background: var(--bg-2); border: 1px solid var(--line); border-radius: 
   .nav a { font-family: var(--f-display); font-size: 40px; color: var(--text); text-transform: uppercase; }
   .nav a.nav__cta { margin: 16px 0 0; font-size: 28px; padding: 10px 30px; }
   .toolbar__right { width: 100%; }
-  .search { flex: 1; }
+  .toolbar__right .segmented { width: 100%; }
+  .toolbar__right .seg { flex: 1; justify-content: center; padding: 9px 6px; }
+  .search { flex: 1 1 100%; }
   .search input { width: 100%; }
+  .toolbar__right select { flex: 1; }
+  .stock__meta { display: block; line-height: 1.7; }
+  .stock__meta .live { display: inline-block; margin-right: 6px; }
+  .footer__links a { padding: 8px 0; }
   .modal__box { grid-template-columns: 1fr; }
   .modal__art .art { border-radius: 24px 24px 0 0; min-height: 260px; }
   .event { grid-template-columns: 40px 1fr; }
