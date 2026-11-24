@@ -29,6 +29,12 @@
   if (AJ.cita) $("#txtCita").textContent = "“" + AJ.cita + "”";
   setText("#txtDireccion", AJ.direccion);
   if (AJ.horario) { $("#txtHorario").textContent = AJ.horario; $("#txtHorario").hidden = false; }
+  if (AJ.foto_sobre_mi) {
+    const img = new Image();
+    img.alt = "Edu, Kai Collect";
+    img.onload = () => { const f = $("#aboutFrame"); f.innerHTML = ""; f.appendChild(img); };
+    img.src = AJ.foto_sobre_mi;
+  }
   if (AJ.aviso) { $("#aviso").textContent = AJ.aviso; $("#aviso").hidden = false; }
 
   /* ---------- Header / menú ---------- */
@@ -295,6 +301,12 @@
       </div>`;
   }
 
+  if (!GRADEADAS.length) {
+    // Sin gradeadas: se oculta el Vault y el slab de la portada
+    $("#heroSlab").hidden = true;
+    $("#vault").hidden = true;
+    $$('a[href="#vault"]').forEach((l) => (l.hidden = true));
+  } else {
   // Slab del hero
   const heroSlab = $("#heroSlab");
   heroSlab.innerHTML = slabHTML(GRADEADAS[0]);
@@ -391,6 +403,8 @@
     heroSlab.style.setProperty("--sx", (px * 80).toFixed(1));
     heroSlab.style.setProperty("--sp", (px * 30).toFixed(1) + "%");
   });
+
+  }
 
   /* =========================================================
      EVENTOS + FAQ

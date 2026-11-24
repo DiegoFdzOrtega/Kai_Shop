@@ -47,6 +47,7 @@ supabase/seed.sql             Productos actuales para empezar
 | Quitarlo un tiempo | Botón 👁 (lo oculta sin borrarlo) |
 | Poner un aviso | **Textos y aviso** → "Barra de aviso" (ej. *Cerrado el lunes*) |
 | Horario / dirección | **Textos y aviso** |
+| Foto de "Sobre mí" | **Textos y aviso** → arrastra la foto (se guarda al momento) |
 | Card shows | **Eventos** (▲▼ para ordenar) |
 
 Sin `js/config.js` configurado, la web funciona igual con los datos de `js/data.js`.

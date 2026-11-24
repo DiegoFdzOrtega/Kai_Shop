@@ -63,14 +63,14 @@
     const path = decodeURIComponent(url.split(marker)[1]);
     await sb.storage.from(BUCKET).remove([path]);
   }
-  function setupDrop(dropEl, inputEl, previewEl, onFile) {
+  function setupDrop(dropEl, inputEl, previewEl, onFile, max = 1000) {
     const handle = async (file) => {
       if (!file || !file.type.startsWith("image/")) return toast("Eso no es una imagen", true);
-      const blob = await compress(file);
+      const blob = await compress(file, max);
       previewEl.src = URL.createObjectURL(blob); previewEl.hidden = false;
       onFile(blob);
     };
-    inputEl.addEventListener("change", () => handle(inputEl.files[0]));
+    inputEl.addEventListener("change", () => { handle(inputEl.files[0]); inputEl.value = ""; });
     ["dragenter", "dragover"].forEach((ev) => dropEl.addEventListener(ev, (e) => { e.preventDefault(); dropEl.classList.add("is-over"); }));
     ["dragleave", "drop"].forEach((ev) => dropEl.addEventListener(ev, () => dropEl.classList.remove("is-over")));
     dropEl.addEventListener("drop", (e) => { e.preventDefault(); handle(e.dataTransfer.files[0]); });
@@ -416,7 +416,33 @@
      TEXTOS
      ========================================================= */
   const TEXT_KEYS = ["aviso", "horario", "direccion", "sobre_mi_1", "sobre_mi_2", "cita"];
-  function fillTextos() { const f = $("#textosForm").elements; TEXT_KEYS.forEach((k) => (f[k].value = S.ajustes[k] || "")); }
+  function fillTextos() {
+    const f = $("#textosForm").elements; TEXT_KEYS.forEach((k) => (f[k].value = S.ajustes[k] || ""));
+    const prev = $("#fotoPreview"), url = S.ajustes.foto_sobre_mi;
+    if (url) { prev.src = imgUrl(url); prev.hidden = false; } else { prev.removeAttribute("src"); prev.hidden = true; }
+    $("#fotoQuitar").hidden = !url;
+  }
+
+  /* Foto de "Sobre mí": se sube y se guarda al momento */
+  setupDrop($("#fotoDrop"), $("#fotoFile"), $("#fotoPreview"), async (blob) => {
+    try {
+      toast("Subiendo foto…");
+      const old = S.ajustes.foto_sobre_mi;
+      const url = await upload(blob, "sobre-mi", "edu");
+      const { error } = await sb.from("ajustes").upsert({ clave: "foto_sobre_mi", valor: url });
+      if (error) throw error;
+      S.ajustes.foto_sobre_mi = url; $("#fotoQuitar").hidden = false;
+      if (old) removeStored(old).catch(() => {});
+      toast("Foto actualizada ✓ Ya se ve en la web");
+    } catch (err) { fail(err, "Subiendo foto"); fillTextos(); }
+  }, 1200);
+  $("#fotoQuitar").addEventListener("click", async () => {
+    if (!confirm("¿Quitar la foto de \"Sobre mí\"?")) return;
+    const old = S.ajustes.foto_sobre_mi;
+    const { error } = await sb.from("ajustes").upsert({ clave: "foto_sobre_mi", valor: "" });
+    if (error) return fail(error, "Quitando foto");
+    S.ajustes.foto_sobre_mi = ""; removeStored(old).catch(() => {}); fillTextos(); toast("Foto quitada");
+  });
   $("#guardarTextos").addEventListener("click", async () => {
     const f = $("#textosForm").elements, btn = $("#guardarTextos");
     btn.disabled = true;

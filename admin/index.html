@@ -106,6 +106,18 @@
           <button class="btn btn--red" id="guardarTextos">Guardar textos</button>
         </header>
         <form class="form form--wide" id="textosForm">
+          <div class="span2 fotoSobre">
+            <div class="drop drop--foto" id="fotoDrop">
+              <img id="fotoPreview" alt="" hidden />
+              <div class="drop__txt"><b>Foto de "Sobre mí"</b><br />arrastra o pulsa<br /><small>Vertical queda mejor (4:5)</small></div>
+              <input type="file" id="fotoFile" accept="image/*" />
+            </div>
+            <div class="fotoSobre__info">
+              <b>Foto de "Sobre mí"</b>
+              <p class="muted">Sale al lado del texto de presentación de la web. Se sube y se guarda al momento, no hace falta pulsar "Guardar textos".</p>
+              <button type="button" class="btn btn--ghost btn--sm" id="fotoQuitar" hidden>Quitar foto</button>
+            </div>
+          </div>
           <label class="span2">Barra de aviso (arriba del todo)
             <input name="aviso" placeholder="Ej: Este sábado estamos en el Iberian Card Show · Cerrado el lunes" />
             <small>Si lo dejas vacío, la barra no aparece.</small>
