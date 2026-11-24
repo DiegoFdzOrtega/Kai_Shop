@@ -1,7 +1,9 @@
 /* =========================================================
    KAI COLLECT · DATOS EDITABLES
    ---------------------------------------------------------
-   Aquí Edu puede cambiar el stock sin tocar nada más.
+   Datos de RESPALDO: la web los usa si Supabase no está
+   configurado (js/config.js). Con Supabase activo, Edu edita
+   todo desde el panel /admin y este archivo se ignora.
    - stock: unidades POR IDIOMA, ej. { ES: 5, EN: 3, JP: 0 }
             (0 = agotado en ese idioma; si no existe, no se muestra)
    - img:   ruta a la foto real. Ya viene un nombre puesto: guarda
@@ -49,7 +51,7 @@ const CATEGORIAS = [
   { id: "vintage",  nombre: "Vintage" },
 ];
 
-const PRODUCTOS = [
+let PRODUCTOS = [
   // --- 30th Celebration (30 aniversario) ---
   { id: 30, tipo: "sobre",   set: "30th Celebration", nombre: "Sobre 30th Celebration",                  img: "img/productos/30th-sobre.webp",                  stock: { EN: 40, ES: 20 }, c1: "#ffd400", c2: "#d10f2f", tag: "30th" },
   { id: 31, tipo: "bundle",  set: "30th Celebration", nombre: "Booster Bundle 30th Celebration (6 sobres)", img: "img/productos/30th-booster-bundle.webp",      stock: { EN: 8, ES: 4 },  c1: "#ffd400", c2: "#d10f2f", tag: "30th" },
@@ -103,7 +105,7 @@ const PRODUCTOS = [
      fotos con ESE nombre en img/gradeadas/. Si no existen, se
      dibuja un slab genérico.
    ========================================================= */
-const GRADEADAS = [
+let GRADEADAS = [
   { id: "g6", nombre: "Pikachu Grey Felt Hat", set: "Van Gogh Museum · SVP Promo", anio: 2023, num: "085", empresa: "PSA", nota: 10, etiqueta: "GEM MT", tipo: "vangogh", carta: "img/gradeadas/g6-pikachu-van-gogh.webp", front: "img/gradeadas/g6-pikachu-van-gogh-front.jpg", back: "img/gradeadas/g6-pikachu-van-gogh-back.jpg", cert: "KAI-0006" },
   { id: "g1", nombre: "Charizard", set: "Base Set · 1st Edition", anio: 1999, num: "4/102",  empresa: "PSA", nota: 10, etiqueta: "GEM MT", tipo: "fuego",   carta: "img/gradeadas/g1-charizard.webp", front: "img/gradeadas/g1-charizard-front.jpg", back: "img/gradeadas/g1-charizard-back.jpg", cert: "KAI-0001" },
   { id: "g2", nombre: "Lugia",     set: "Neo Genesis · Holo", anio: 2000, num: "9/111", empresa: "PSA", nota: 10, etiqueta: "GEM MT", tipo: "psiquico", carta: "img/gradeadas/g2-lugia.webp", front: "img/gradeadas/g2-lugia-front.jpg", back: "img/gradeadas/g2-lugia-back.jpg", cert: "KAI-0002" },
@@ -123,7 +125,7 @@ const TIPOS = {
   vangogh:   ["#ffd400", "#1e3a8a", "#f97316"],
 };
 
-const EVENTOS = [
+let EVENTOS = [
   { nombre: "Iberian Trading Card Show", lugar: "Madrid", info: "Powered by Topps · 2026" },
   { nombre: "Iberian Card Show", lugar: "Edición 1", info: "Stand Kai Collect" },
   { nombre: "Swindon Card Show", lugar: "Reino Unido", info: "Valencia → UK" },
@@ -131,7 +133,7 @@ const EVENTOS = [
   { nombre: "Quedadas locales", lugar: "Comunidad Valenciana", info: "Plaza Ayto. San Antonio de Benagéber" },
 ];
 
-const FAQ = [
+let FAQ = [
   { q: "¿Vendéis por la web?", a: "No. La web muestra el stock disponible en tienda. Para reservar algo escríbenos por Instagram y te lo guardamos. Las ventas online van por Cardmarket." },
   { q: "¿Compráis colecciones?", a: "Sí. Compramos cartas gradeadas, producto sellado y cartas sueltas. Mándanos fotos por DM y te hacemos oferta." },
   { q: "¿Hacéis intercambios?", a: "Buy · Sell · Trade worldwide. Si tienes algo interesante, hablamos." },

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Panel · Kai Collect</title>
+  <meta name="theme-color" content="#0a0a0c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Serif+JP:wght@900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <!-- ============ LOGIN ============ -->
+  <section class="login" id="login" hidden>
+    <form class="login__box" id="loginForm">
+      <div class="brand"><span>K</span><i>会</i><span>I</span><small>PANEL</small></div>
+      <h1>Hola, Edu 👋</h1>
+      <p class="muted">Entra para gestionar el stock de la tienda.</p>
+      <label>Email<input type="email" id="loginEmail" autocomplete="username" required /></label>
+      <label>Contraseña<input type="password" id="loginPass" autocomplete="current-password" required /></label>
+      <button class="btn btn--red" type="submit" id="loginBtn">Entrar</button>
+      <p class="login__error" id="loginError" role="alert"></p>
+    </form>
+  </section>
+
+  <!-- ============ SIN CONFIGURAR ============ -->
+  <section class="login" id="noConfig" hidden>
+    <div class="login__box">
+      <div class="brand"><span>K</span><i>会</i><span>I</span><small>PANEL</small></div>
+      <h1>Falta conectar Supabase</h1>
+      <p class="muted">Abre <code>js/config.js</code> y pega la <b>Project URL</b> y la <b>anon key</b> de tu proyecto de Supabase. Los pasos están en el <code>README.md</code>.</p>
+    </div>
+  </section>
+
+  <!-- ============ APP ============ -->
+  <div class="app" id="app" hidden>
+    <aside class="side">
+      <div class="brand"><span>K</span><i>会</i><span>I</span><small>PANEL</small></div>
+      <nav class="side__nav" id="sideNav">
+        <button data-view="productos" class="is-active"><span>📦</span>Productos</button>
+        <button data-view="gradeadas"><span>💎</span>Gradeadas</button>
+        <button data-view="eventos"><span>🎟️</span>Eventos</button>
+        <button data-view="faq"><span>❓</span>FAQ</button>
+        <button data-view="textos"><span>✏️</span>Textos y aviso</button>
+      </nav>
+      <div class="side__foot">
+        <a class="btn btn--ghost btn--sm" href="../index.html" target="_blank" rel="noopener">Ver la web ↗</a>
+        <button class="btn btn--ghost btn--sm" id="logout">Cerrar sesión</button>
+        <p class="side__user" id="userEmail"></p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <!-- PRODUCTOS -->
+      <section class="view" id="view-productos">
+        <header class="view__head">
+          <div>
+            <h2>Productos</h2>
+            <p class="muted" id="prodResumen"></p>
+          </div>
+          <button class="btn btn--red" id="nuevoProducto">+ Nuevo producto</button>
+        </header>
+        <div class="toolbar">
+          <input type="search" id="prodBuscar" placeholder="Buscar producto o set…" />
+          <select id="prodSet"><option value="">Todos los sets</option></select>
+          <select id="prodTipo"><option value="">Todos los tipos</option></select>
+          <label class="check"><input type="checkbox" id="prodAgotados" /> Solo agotados</label>
+        </div>
+        <p class="hint">Escribe las unidades por idioma y se guarda solo. <b>Vacío</b> = no lo vendes en ese idioma · <b>0</b> = agotado.</p>
+        <div class="plist" id="prodList"></div>
+      </section>
+
+      <!-- GRADEADAS -->
+      <section class="view" id="view-gradeadas" hidden>
+        <header class="view__head">
+          <div><h2>Gradeadas (Vault)</h2><p class="muted">Los slabs que giran en 3D en la web.</p></div>
+          <button class="btn btn--red" id="nuevaGradeada">+ Nueva gradeada</button>
+        </header>
+        <div class="ggrid" id="gradList"></div>
+      </section>
+
+      <!-- EVENTOS -->
+      <section class="view" id="view-eventos" hidden>
+        <header class="view__head">
+          <div><h2>Eventos y card shows</h2><p class="muted">Sección "Nos vemos en los card shows".</p></div>
+          <button class="btn btn--red" id="nuevoEvento">+ Añadir evento</button>
+        </header>
+        <div class="rows" id="evList"></div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="view" id="view-faq" hidden>
+        <header class="view__head">
+          <div><h2>Preguntas frecuentes</h2><p class="muted">Sección FAQ de la web.</p></div>
+          <button class="btn btn--red" id="nuevaFaq">+ Añadir pregunta</button>
+        </header>
+        <div class="rows" id="faqList"></div>
+      </section>
+
+      <!-- TEXTOS -->
+      <section class="view" id="view-textos" hidden>
+        <header class="view__head">
+          <div><h2>Textos y aviso</h2><p class="muted">Lo que se lee en la web. Deja un campo vacío para usar el texto por defecto.</p></div>
+          <button class="btn btn--red" id="guardarTextos">Guardar textos</button>
+        </header>
+        <form class="form form--wide" id="textosForm">
+          <label class="span2">Barra de aviso (arriba del todo)
+            <input name="aviso" placeholder="Ej: Este sábado estamos en el Iberian Card Show · Cerrado el lunes" />
+            <small>Si lo dejas vacío, la barra no aparece.</small>
+          </label>
+          <label>Horario de la tienda
+            <textarea name="horario" rows="4" placeholder="L-V 17:00 - 21:00&#10;Sábado 10:00 - 14:00"></textarea>
+          </label>
+          <label>Dirección / texto bajo POKEKAI
+            <textarea name="direccion" rows="4" placeholder="Calle..., Valencia"></textarea>
+          </label>
+          <label class="span2">Sobre mí · párrafo 1<textarea name="sobre_mi_1" rows="3"></textarea></label>
+          <label class="span2">Sobre mí · párrafo 2<textarea name="sobre_mi_2" rows="3"></textarea></label>
+          <label class="span2">Frase destacada<input name="cita" /></label>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============ MODAL PRODUCTO ============ -->
+  <dialog class="modal" id="prodModal">
+    <form class="form" id="prodForm" method="dialog">
+      <header class="modal__head">
+        <h3 id="prodModalTitle">Nuevo producto</h3>
+        <button type="button" class="x" data-close aria-label="Cerrar">✕</button>
+      </header>
+      <div class="form__cols">
+        <div class="drop" id="prodDrop">
+          <img id="prodPreview" alt="" hidden />
+          <div class="drop__txt"><b>Arrastra la foto aquí</b><br />o pulsa para elegir<br /><small>PNG con fondo transparente queda mejor</small></div>
+          <input type="file" id="prodFile" accept="image/*" />
+        </div>
+        <div class="form__fields">
+          <label>Nombre *<input name="nombre" required placeholder="Elite Trainer Box 151" /></label>
+          <div class="two">
+            <label>Set<input name="set_nombre" list="setsList" placeholder="151" /></label>
+            <label>Tipo<select name="tipo">
+              <option value="sobre">Sobre</option><option value="bundle">Booster Bundle</option>
+              <option value="blister">Blíster</option><option value="etb">Elite Trainer Box</option>
+              <option value="box">Booster Box</option><option value="premium">Colección / Premium</option>
+              <option value="tin">Lata</option><option value="vintage">Vintage</option>
+            </select></label>
+          </div>
+          <fieldset class="stockset">
+            <legend>Stock por idioma <small>(vacío = no lo vendes en ese idioma)</small></legend>
+            <label>🇪🇸 ES<input type="number" min="0" name="ES" /></label>
+            <label>🇬🇧 EN<input type="number" min="0" name="EN" /></label>
+            <label>🇯🇵 JP<input type="number" min="0" name="JP" /></label>
+            <label>🇰🇷 KR<input type="number" min="0" name="KR" /></label>
+          </fieldset>
+          <div class="two">
+            <label>Etiqueta<input name="tag" list="tagsList" placeholder="Nuevo, Top, Últimas, JP…" /></label>
+            <label>Precio (opcional)<input name="precio" placeholder="Consultar" /></label>
+          </div>
+          <div class="two">
+            <label>Orden (menor sale antes)<input type="number" name="orden" value="0" /></label>
+            <label class="check check--box"><input type="checkbox" name="activo" checked /> Visible en la web</label>
+          </div>
+        </div>
+      </div>
+      <footer class="modal__foot">
+        <button type="button" class="btn btn--danger" id="prodBorrar" hidden>Borrar</button>
+        <span class="grow"></span>
+        <button type="button" class="btn btn--ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn btn--red" id="prodGuardar">Guardar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- ============ MODAL GRADEADA ============ -->
+  <dialog class="modal" id="gradModal">
+    <form class="form" id="gradForm" method="dialog">
+      <header class="modal__head">
+        <h3 id="gradModalTitle">Nueva gradeada</h3>
+        <button type="button" class="x" data-close aria-label="Cerrar">✕</button>
+      </header>
+      <div class="form__cols">
+        <div class="drop drop--card" id="gradDrop">
+          <img id="gradPreview" alt="" hidden />
+          <div class="drop__txt"><b>Imagen de la carta</b><br />arrastra o pulsa<br /><small>Solo la carta, sin el slab</small></div>
+          <input type="file" id="gradFile" accept="image/*" />
+        </div>
+        <div class="form__fields">
+          <label>Carta *<input name="nombre" required placeholder="Charizard" /></label>
+          <label>Set / variante<input name="set_nombre" placeholder="Base Set · 1st Edition" /></label>
+          <div class="three">
+            <label>Año<input type="number" name="anio" placeholder="1999" /></label>
+            <label>Número<input name="num" placeholder="4/102" /></label>
+            <label>Paleta<select name="tipo">
+              <option value="fuego">🔥 Fuego</option><option value="agua">💧 Agua</option>
+              <option value="psiquico">🔮 Psíquico</option><option value="siniestro">🌙 Siniestro</option>
+              <option value="dragon">🐉 Dragón</option><option value="vangogh">🎨 Van Gogh</option>
+            </select></label>
+          </div>
+          <div class="three">
+            <label>Empresa<select name="empresa"><option>PSA</option><option>CGC</option><option>BGS</option><option>TAG</option><option>ACE</option></select></label>
+            <label>Nota<input type="number" name="nota" step="0.5" min="1" max="10" value="10" /></label>
+            <label>Etiqueta<input name="etiqueta" value="GEM MT" /></label>
+          </div>
+          <div class="two">
+            <label>Orden<input type="number" name="orden" value="0" /></label>
+            <label class="check check--box"><input type="checkbox" name="activo" checked /> Visible en la web</label>
+          </div>
+        </div>
+      </div>
+      <footer class="modal__foot">
+        <button type="button" class="btn btn--danger" id="gradBorrar" hidden>Borrar</button>
+        <span class="grow"></span>
+        <button type="button" class="btn btn--ghost" data-close>Cancelar</button>
+        <button type="submit" class="btn btn--red" id="gradGuardar">Guardar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <datalist id="setsList"></datalist>
+  <datalist id="tagsList"><option value="Nuevo"><option value="Top"><option value="Últimas"><option value="JP"><option value="30th"><option value="Vintage"></datalist>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -54,6 +54,12 @@ button, input, select { font: inherit; color: inherit; }
   left: var(--cx, -999px); top: var(--cy, -999px); transition: opacity .3s;
 }
 
+/* ============ AVISO (editable desde el panel) ============ */
+.aviso { position: relative; z-index: 60; background: var(--red); color: #fff; text-align: center; font-weight: 700; font-size: 14px; padding: 9px 20px; }
+.aviso:not([hidden]) ~ .header { top: 38px; }
+.header.is-scrolled { top: 0 !important; }
+.shop__horario { display: block; margin-top: 6px; color: var(--text) !important; font-family: var(--f-mono); font-size: 12px !important; white-space: pre-line; }
+
 /* ============ HEADER ============ */
 .header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;

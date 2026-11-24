@@ -1,8 +1,9 @@
 /* =========================================================
    KAI COLLECT · Lógica de la web
    ========================================================= */
-(() => {
+(async () => {
   "use strict";
+  const DATOS = await (window.KAI_READY || Promise.resolve({ origen: "local" }));
 
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
@@ -19,6 +20,16 @@
   $$("[data-link]").forEach((a) => (a.href = LINKS[a.dataset.link] || "#"));
   $("#year").textContent = new Date().getFullYear();
   $("#updated").textContent = CONFIG.actualizado;
+
+  /* ---------- Textos editables desde el panel ---------- */
+  const AJ = DATOS.ajustes || {};
+  const setText = (sel, val) => { const el = $(sel); if (el && val) el.textContent = val; };
+  setText("#txtSobre1", AJ.sobre_mi_1);
+  setText("#txtSobre2", AJ.sobre_mi_2);
+  if (AJ.cita) $("#txtCita").textContent = "“" + AJ.cita + "”";
+  setText("#txtDireccion", AJ.direccion);
+  if (AJ.horario) { $("#txtHorario").textContent = AJ.horario; $("#txtHorario").hidden = false; }
+  if (AJ.aviso) { $("#aviso").textContent = AJ.aviso; $("#aviso").hidden = false; }
 
   /* ---------- Header / menú ---------- */
   const header = $("#header");

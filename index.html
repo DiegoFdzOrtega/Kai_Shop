@@ -15,6 +15,8 @@
   <div class="noise" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 
+  <div class="aviso" id="aviso" hidden></div>
+
   <!-- ============ HEADER ============ -->
   <header class="header" id="header">
     <a href="#inicio" class="logo" aria-label="Kai Collect inicio">
@@ -184,9 +186,9 @@
         <div class="about__text reveal">
           <p class="kicker"><span>04</span> Sobre mí</p>
           <h2 class="h2">De coleccionista<br />a <em>Kai Collect</em></h2>
-          <p>Soy Edu, de Valencia. Abrí mi primer sobre de pequeño y nunca he parado. Kai Collect nace de eso: de las ganas de compartir esta afición con gente que la vive igual que yo.</p>
-          <p>Hoy nos dedicamos a comprar, vender e intercambiar Pokémon TCG por todo el mundo: producto sellado, cartas sueltas y gradeadas top. Nos verás en card shows de España y Europa, haciendo sorteos y abriendo sobres en directo.</p>
-          <p class="about__quote">“会 (kai) significa <b>reunión, encuentro</b>. Eso es esta tienda: un sitio donde se junta la comunidad.”</p>
+          <p id="txtSobre1">Soy Edu, de Valencia. Abrí mi primer sobre de pequeño y nunca he parado. Kai Collect nace de eso: de las ganas de compartir esta afición con gente que la vive igual que yo.</p>
+          <p id="txtSobre2">Hoy nos dedicamos a comprar, vender e intercambiar Pokémon TCG por todo el mundo: producto sellado, cartas sueltas y gradeadas top. Nos verás en card shows de España y Europa, haciendo sorteos y abriendo sobres en directo.</p>
+          <p class="about__quote" id="txtCita">“会 (kai) significa <b>reunión, encuentro</b>. Eso es esta tienda: un sitio donde se junta la comunidad.”</p>
 
           <ul class="about__facts">
             <li><span>📍</span> <a data-link="maps" target="_blank" rel="noopener">Tienda POKEKAI · Valencia ↗</a></li>
@@ -218,7 +220,8 @@
             <span class="shop__pin">📍</span>
             <div>
               <strong>POKEKAI</strong>
-              <span>Kai Collect · Valencia, España</span>
+              <span id="txtDireccion">Kai Collect · Valencia, España</span>
+              <span class="shop__horario" id="txtHorario" hidden></span>
             </div>
           </div>
           <div class="shop__btns">
@@ -354,7 +357,9 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="js/config.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/loader.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
